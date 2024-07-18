@@ -45,10 +45,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    
     "procedures_app",
-    'import_export',
-  ]
+    "import_export",
+    "user_app",
+]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -139,4 +139,4 @@ STATIC_ROOT = ("static",)
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # модель использования для аутентификации
-# AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'user_app.User'

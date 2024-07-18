@@ -1,0 +1,31 @@
+{% extends "base.html" %} 
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6 bg-white p-4 mb-4 mx-3 rounded custom-shadow">
+                    <h2 class="text-center mb-4">{{ title }}</h2>
+                    <form action="{% url 'user_app:registration' %}" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            {% for field in form %}
+                                {{ field.label }}
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="alert alert-warning" role="alert">
+                                        {{ field.errors }}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-success btn-block">Зарегистрироваться</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    
+{% endblock %}
+    
