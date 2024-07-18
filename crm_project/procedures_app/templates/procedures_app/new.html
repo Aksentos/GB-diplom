@@ -4,7 +4,7 @@
 
 {% block content %}
 <h1>{{ title }}</h1>
-<form action="{% url 'main:update_procedure' %}" method="post">
+<form action="{% url 'procedures_app:update_procedure' %}" method="post">
   {% csrf_token %}
   <button class="btn btn-primary" type="submit">Обновить список</button>
 </form>
