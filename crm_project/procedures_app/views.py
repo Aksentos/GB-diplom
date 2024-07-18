@@ -5,14 +5,13 @@ from django.shortcuts import redirect, render
 
 from .models import Archive, NewProcedures
 from user_app.models import User
-from user_procedures_app.models import Contract, ProcedureForUser, UserProcedure
-
+from user_procedures_app.models import Contract, ProcedureForUser, ManagerProcedure
 
 
 # Стартовая странциа
 def index(request):
     managers = User.objects.all()
-    user_procedures = UserProcedure.objects.all()
+    user_procedures = ManagerProcedure.objects.all()
     contracts = Contract.objects.all().count()
     context = {
         "title": "CRM 44 FZ",

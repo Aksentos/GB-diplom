@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "procedures_app",
     "import_export",
     "user_app",
+    "user_procedures_app",
 ]
 
 MIDDLEWARE = [
@@ -139,4 +140,4 @@ STATIC_ROOT = ("static",)
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # модель использования для аутентификации
-AUTH_USER_MODEL = 'user_app.User'
+AUTH_USER_MODEL = "user_app.User"

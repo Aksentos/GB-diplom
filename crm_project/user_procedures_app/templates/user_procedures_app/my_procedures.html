@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %} {{ title }} {% endblock %} 
+
+{% block content %}
+<h1>{{ title }}</h1>
+<h2> Сотрудник {{ staff }}</h2>
+<br>
+<form action="{% url 'user_procedures_app:add_new_procedure' %}">
+  {% csrf_token %}
+  <button class="btn btn-primary" type="submit">Добавить процедуру</button>
+</form>
+<br>
+{% if procedures %}
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="thead--light">
+        <tr>
+          <th scope="col">Статус заявки</th>
+          <th scope="col">Номер процедуры</th>
+          <th scope="col">Предмет закупки</th>
+          <th scope="col">Заказчик</th>
+          <th scope="col">Начальная цена</th>
+          <th scope="col">Обновлено</th>
+          <th scope="col">Окончание подачи заявок</th>
+          <th scope="col">Удалить</th>
+        </tr>
+      </thead>
+      {% for el in procedures %}
+      <tbody style="font-size: 75%" ;>
+        <tr>
+          <td>
+            <form method="post" action="{% url 'user_procedures_app:update_procedure_status' %}">
+              {% csrf_token %}
+              <input type="hidden" name="procedure_id" value="{{ el.procedure.id }}">
+              <select class="form-select form-select-sm" name="status">
+                  <option value="at_work" {% if el.procedure.status == "at_work" %} selected {% endif %}>В работе</option>
+                  <option value="submitted" {% if el.procedure.status == "submitted" %} selected {% endif %}>Подана</option>
+                  <option value="withdrawn" {% if el.procedure.status == "withdrawn" %} selected {% endif %}>Отозвана</option>
+              </select>
+              <button type="submit" class="btn btn-outline-success btn-sm">Сохранить</button>
+            </form>
+            <form action="{% url 'user_procedures_app:add_new_contract' %}" method="post">
+              <input type="hidden" name="procedure_id" value="{{ el.procedure.id }}">
+              {% csrf_token %}
+              <button class="btn btn-outline-info btn-sm" type="submit">Заключить контракт</button>
+            </form>
+
+          </td>
+          <td><a href="{{el.procedure.purchase_link}}">{{el.procedure.number}}</a></td>
+          <td>{{el.procedure.purchase_name}}</td>
+          <td>{{el.procedure.customer}}</td>
+          <td>{{el.procedure.price}}</td>
+          <td>{{el.procedure.update}}</td>
+          <td class="text-bold">{{el.procedure.end}}</td>
+          <td>
+            <form method="post" action="{% url 'user_procedures_app:delete_procedure' %}">
+              {% csrf_token %}
+              <input type="hidden" name="procedure_id" value="{{ el.procedure.id }}">
+              <button type="submit" class="btn btn-outline-danger btn-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                </svg>
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <h3>Нет закупок в работе</h3>
+{% endif %} 
+
+{% endblock %}
