@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %} {{ title }} {% endblock %} 
+
+{% block content %}
+<h1>{{ title }}</h1>
+<form action="{% url 'main:update_procedure' %}" method="post">
+  {% csrf_token %}
+  <button class="btn btn-primary" type="submit">Обновить список</button>
+</form>
+
+{% if procedures %}
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead class="thead--light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Способ определния поставщика</th>
+        <th scope="col">Номер процедуры</th>
+        <th scope="col">Предмет закупки</th>
+        <th scope="col">Заказчик</th>
+        <th scope="col">Начальная цена</th>
+        <th scope="col">Размещено</th>
+        <th scope="col">Обновлено</th>
+        <th scope="col">Окончание подачи заявок</th>
+      </tr>
+    </thead>
+    {% for el in procedures %}
+    <tbody style="font-size: 75%" ;>
+      <tr>
+        <td>
+          <form action="{% url 'user_procedures:add_procedure_to_user' el.id %}" method="post">
+            {% csrf_token %}
+            <input class="btn btn-primary" type="submit" value="в работу" />
+          </form>
+        </td>
+        <td>{{el.method}}</td>
+        <td><a href="{{el.purchase_link}}">{{el.number}}</a></td>
+        <td>{{el.purchase_name}}</td>
+        <td>{{el.customer}}</td>
+        <td>{{el.price}}</td>
+        <td>{{el.start}}</td>
+        <td>{{el.update}}</td>
+        <td>{{el.end}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<h3>Нет новых закупок</h3>
+{% endif %} 
+{% endblock %}
