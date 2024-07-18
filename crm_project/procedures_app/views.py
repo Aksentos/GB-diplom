@@ -10,7 +10,7 @@ from user_procedures_app.models import Contract, ManagerProcedure
 
 # Стартовая странциа
 def index(request):
-    managers = User.objects.all()
+    managers = User.objects.filter(is_superuser=False)
     user_procedures = ManagerProcedure.objects.all()
     contracts = Contract.objects.all().count()
     context = {
@@ -20,7 +20,7 @@ def index(request):
         "user_procedures": user_procedures,
         "contracts": contracts,
     }
-    return render(request, "main/index.html", context)
+    return render(request, "procedures_app/index.html", context)
 
 
 # страница с новыми закупками
@@ -31,7 +31,7 @@ def new(request):
             "end"
         ),  # Сортировка по возрастанию даты
     }
-    return render(request, "main/new.html", context)
+    return render(request, "procedures_app/new.html", context)
 
 
 # страница со всеми закупками
@@ -44,12 +44,12 @@ def archive(request):
         "title": "Архив процедур",
         "procedures": Archive.objects.order_by("-end"),  # Сортировка по убыванию даты
     }
-    return render(request, "main/archive.html", context)
+    return render(request, "procedures_app/archive.html", context)
 
 
 # страница инфо
 def about(request):
-    return render(request, "main/about.html")
+    return render(request, "procedures_app/about.html")
 
 
 # функция собирает данные для обработки с сайта закупок
@@ -167,7 +167,7 @@ def update_procedures(request):
                 purchase_link=v["purchase_link"],
             )
     update_archive()  # добавляем все новые закупки в общий архив
-    return redirect("main:new")
+    return redirect("procedures_app:new")
 
 
 # для добавления закупок в архив

@@ -24,7 +24,7 @@ def add_new_procedure(request):
         if form.is_valid():
             new_procedure = form.save()
             ManagerProcedure.objects.create(user=request.user, procedure=new_procedure)
-            return redirect("user_procedures:my_procedures")
+            return redirect("user_procedures_app:my_procedures")
 
     else:
         form = ProcedureForUserForm()
