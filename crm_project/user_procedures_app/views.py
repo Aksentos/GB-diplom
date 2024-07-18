@@ -1,5 +1,4 @@
 from django.shortcuts import redirect, render
-
 from procedures_app.models import Archive, NewProcedures
 from .forms import ContractForm, ProcedureForUserForm
 from .models import Contract, ProcedureForUser, ManagerProcedure

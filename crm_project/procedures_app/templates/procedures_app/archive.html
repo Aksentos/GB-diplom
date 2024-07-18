@@ -26,7 +26,7 @@
     <tbody style="font-size: 75%" ;>
       <tr>
         <td>
-          <form action="{% url 'user_procedures:add_procedure_to_user' el.id %}" method="post">
+          <form action="{% url 'user_procedures_app:add_procedure_to_user' el.id %}" method="post">
             {% csrf_token %}
             <input class="btn btn-primary" type="submit" value="в работу" />
           </form>

@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 
 from .models import Archive, NewProcedures
 from user_app.models import User
-from user_procedures_app.models import Contract, ProcedureForUser, ManagerProcedure
+from user_procedures_app.models import Contract, ManagerProcedure
 
 
 # Стартовая странциа
